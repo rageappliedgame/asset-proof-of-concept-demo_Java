@@ -19,8 +19,7 @@ public class Logger extends BaseAsset {
 	
 	private List<LoggerListener> listeners;
 	
-	protected Logger(String id) {
-		super(id);
+	public Logger() {
 		this.listeners = new LinkedList<>();
 		this.listeners.add(new DefaultLoggerListener());
 	}
@@ -45,5 +44,9 @@ public class Logger extends BaseAsset {
 			doLog(msg);
 		}
 		
+	}
+
+	public void addLoggerListener(LoggerListener myLogger) {
+		this.listeners.add(myLogger);
 	}
 }

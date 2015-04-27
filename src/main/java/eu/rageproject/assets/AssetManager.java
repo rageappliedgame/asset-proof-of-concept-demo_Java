@@ -21,7 +21,7 @@ public final class AssetManager {
 	public static final String LOGGER_KEY = "eu.rageproject.assets";
 
 	private static final Pattern CLASS_PATTERN = Pattern
-			.compile("(([^_]+)_\\d+");
+			.compile("^[^_]+$");
 
 	private static final Logger log = Logger.getLogger(LOGGER_KEY);
 

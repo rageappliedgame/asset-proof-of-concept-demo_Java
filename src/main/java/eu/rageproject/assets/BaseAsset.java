@@ -13,7 +13,7 @@ public abstract class BaseAsset implements Asset {
 	
 	private String testSubscription;
 
-	protected BaseAsset(String id) {
+	protected BaseAsset() {
         this.id = AssetManager.getInstance().registerAssetInstance(this, this.getClassName());
 
 
