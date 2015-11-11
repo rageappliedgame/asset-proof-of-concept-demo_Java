@@ -7,7 +7,7 @@ import eu.rageproject.assets.PubSubz.TopicEvent;
  * @author Ivan Martinez-Ortiz
  *
  */
-public abstract class BaseAsset implements Asset {
+public abstract class BaseAsset implements IAsset {
 
 	private String id;
 	

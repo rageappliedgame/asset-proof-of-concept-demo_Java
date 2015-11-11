@@ -36,7 +36,7 @@ public final class AssetManager {
 		return AssetManager.INSTANCE;
 	}
 
-	private Map<String, Asset> assets;
+	private Map<String, IAsset> assets;
 
 	/**
 	 * Avoid manual instantiation
@@ -47,7 +47,7 @@ public final class AssetManager {
 
 	@SuppressWarnings("unchecked")
 	public <T> T findAssetByClass(String clazz) {
-		for (Map.Entry<String, Asset> e : this.assets.entrySet()) {
+		for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
 			if (CLASS_PATTERN.matcher(e.getKey()).matches()) {
 				return (T) e.getValue();
 			}
@@ -64,7 +64,7 @@ public final class AssetManager {
 	 * @return return the <code>Asset</code> or <code>null</code> if the
 	 *         <code>id</code> is not found.
 	 */
-	public Asset findAssetById(String id) {
+	public IAsset findAssetById(String id) {
 		return this.assets.get(id);
 	}
 
@@ -75,9 +75,9 @@ public final class AssetManager {
 	 *            The
 	 * @return
 	 */
-	public Iterable<Asset> findAssetsByClass(String clazz) {
-		List<Asset> results = new LinkedList<>();
-		for (Map.Entry<String, Asset> e : this.assets.entrySet()) {
+	public Iterable<IAsset> findAssetsByClass(String clazz) {
+		List<IAsset> results = new LinkedList<>();
+		for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
 			if (CLASS_PATTERN.matcher(e.getKey()).matches()) {
 				results.add(e.getValue());
 			}
@@ -85,8 +85,8 @@ public final class AssetManager {
 		return results;
 	}
 
-	public String registerAssetInstance(Asset asset, String clazz) {
-		for (Map.Entry<String, Asset> e : assets.entrySet()) {
+	public String registerAssetInstance(IAsset asset, String clazz) {
+		for (Map.Entry<String, IAsset> e : assets.entrySet()) {
 			if (e.getValue() == asset) {
 				return e.getKey();
 			}

@@ -5,7 +5,7 @@ package eu.rageproject.assets;
  * @author Ivan Martinez-Ortiz
  *
  */
-public interface Asset {
+public interface IAsset {
 
 	public String getClassName();
 	
