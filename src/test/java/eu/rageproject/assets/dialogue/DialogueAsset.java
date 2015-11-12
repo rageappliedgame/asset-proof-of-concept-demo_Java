@@ -1,4 +1,4 @@
-package eu.rageproject.assets.demo;
+package eu.rageproject.assets.dialogue;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -27,11 +27,10 @@ public class DialogueAsset extends BaseAsset {
 
 	private List<State> states;
 
-	protected DialogueAsset() {
+	public DialogueAsset() {
 		this.dialogues = new ArrayList<>();
 		this.states = new ArrayList<>();
-		this.logger = AssetManager.getInstance().<Logger> findAssetByClass(
-				"Logger");
+		this.logger = AssetManager.getInstance().<Logger>findAssetByClass("Logger");
 	}
 
 	public Dialogue interact(String actor, String player, int response) {
@@ -105,7 +104,7 @@ public class DialogueAsset extends BaseAsset {
 	public void loadScript(String actor, String url) throws IOException {
 		loadScript(actor, new FileInputStream(url));
 	}
-	
+
 	public void loadScript(String actor, InputStream input) throws IOException {
 		List<Integer> responses = new LinkedList<>();
 
@@ -128,8 +127,7 @@ public class DialogueAsset extends BaseAsset {
 
 					if (line.indexOf("->") != -1) {
 						text = line.substring(start, line.indexOf("->") - 1);
-						next = Integer.parseInt(line.substring(line
-								.indexOf("->") + "->".length() + 1));
+						next = Integer.parseInt(line.substring(line.indexOf("->") + "->".length() + 1));
 					} else if (line.indexOf("[") != -1 && line.indexOf("]") != -1) {
 						text = line.substring(start, line.indexOf("[") - 1);
 
@@ -252,11 +250,10 @@ final class Dialogue {
 	private final String text;
 
 	private int cachedHashCode;
-	
+
 	private String cachedToString;
 
-	public Dialogue(String id, String actor, int next, List<Integer> responses,
-			String text) {
+	public Dialogue(String id, String actor, int next, List<Integer> responses, String text) {
 		this.cachedHashCode = 0;
 		this.actor = actor;
 		this.id = id;
@@ -307,8 +304,7 @@ final class Dialogue {
 		result = prime * result + ((actor == null) ? 0 : actor.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + next;
-		result = prime * result
-				+ ((responses == null) ? 0 : responses.hashCode());
+		result = prime * result + ((responses == null) ? 0 : responses.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 
 		this.cachedHashCode = result;
@@ -353,10 +349,10 @@ final class Dialogue {
 	@Override
 	public String toString() {
 		if (this.cachedToString == null) {
-			this.cachedToString = "Dialogue [id=" + id + ", actor=" + actor + ", next=" + next
-					+ ", responses=" + responses + ", text=" + text + "]";
+			this.cachedToString = "Dialogue [id=" + id + ", actor=" + actor + ", next=" + next + ", responses="
+					+ responses + ", text=" + text + "]";
 		}
-		return this.cachedToString; 
+		return this.cachedToString;
 	}
 }
 
@@ -437,9 +433,8 @@ final class State {
 
 	@Override
 	public String toString() {
-		if ( this.cachedToString == null ) {
-			this.cachedToString = "State [actor=" + actor + ", player=" + player + ", state="
-					+ state + "]";
+		if (this.cachedToString == null) {
+			this.cachedToString = "State [actor=" + actor + ", player=" + player + ", state=" + state + "]";
 		}
 		return this.cachedToString;
 	}

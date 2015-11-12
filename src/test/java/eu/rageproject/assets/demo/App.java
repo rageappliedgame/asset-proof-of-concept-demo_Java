@@ -5,6 +5,7 @@ import java.io.IOException;
 import eu.rageproject.asset.manager.AssetManager;
 import eu.rageproject.asset.manager.PubSubz;
 import eu.rageproject.asset.manager.PubSubz.TopicEvent;
+import eu.rageproject.assets.dialogue.DialogueAsset;
 import eu.rageproject.assets.logger.Logger;
 
 /**
