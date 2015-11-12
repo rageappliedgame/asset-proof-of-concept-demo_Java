@@ -1,8 +1,5 @@
 package eu.rageproject.assets.logger;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import eu.rageproject.asset.manager.BaseAsset;
 
 /**
@@ -12,41 +9,22 @@ import eu.rageproject.asset.manager.BaseAsset;
  */
 public class Logger extends BaseAsset {
 
-	public interface LoggerListener {
-		public void logEvent(String msg);
-	}
-	
-	
-	private List<LoggerListener> listeners;
+	public static final String LOGGER_KEY = "eu.rageproject.assets.logger";
+
+	private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(LOGGER_KEY);
 	
 	public Logger() {
-		this.listeners = new LinkedList<>();
-		this.listeners.add(new DefaultLoggerListener());
 	}
 	
 	public void log(String msg) {
-		for(LoggerListener listener: this.listeners) {
-			listener.logEvent(msg);				
-		}
-	}
-	
-	private void doLog(String msg) {
-		//! If we're the only subscriber, we expose default behavior.
-		if (this.listeners.size() == 1) {
-			System.out.println(msg);			
-		}
-	}
-
-	private class DefaultLoggerListener implements LoggerListener {
-
-		@Override
-		public void logEvent(String msg) {
-			doLog(msg);
-		}
-		
-	}
-
-	public void addLoggerListener(LoggerListener myLogger) {
-		this.listeners.add(myLogger);
+        //! See what bridge code to call, Asset, Asset Manager or just expose Default behavior (if any).
+        // 
+        ILogger logger = getInterface(ILogger.class);
+        if (logger != null) {
+            // Use a supplied bridge.
+            logger.doLog(msg);
+        } else {
+            this.log.fine(msg);
+        }
 	}
 }
