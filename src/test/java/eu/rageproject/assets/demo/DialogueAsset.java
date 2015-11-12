@@ -10,8 +10,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import eu.rageproject.assets.AssetManager;
-import eu.rageproject.assets.BaseAsset;
+import eu.rageproject.asset.manager.AssetManager;
+import eu.rageproject.asset.manager.BaseAsset;
 import eu.rageproject.assets.logger.Logger;
 
 /**

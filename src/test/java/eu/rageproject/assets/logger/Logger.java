@@ -3,7 +3,7 @@ package eu.rageproject.assets.logger;
 import java.util.LinkedList;
 import java.util.List;
 
-import eu.rageproject.assets.BaseAsset;
+import eu.rageproject.asset.manager.BaseAsset;
 
 /**
  * 

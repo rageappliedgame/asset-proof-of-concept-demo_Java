@@ -1,6 +1,6 @@
-package eu.rageproject.assets;
+package eu.rageproject.asset.manager;
 
-import eu.rageproject.assets.PubSubz.TopicEvent;
+import eu.rageproject.asset.manager.PubSubz.TopicEvent;
 
 /**
  * 

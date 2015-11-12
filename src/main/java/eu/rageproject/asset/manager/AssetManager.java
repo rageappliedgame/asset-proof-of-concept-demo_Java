@@ -1,4 +1,4 @@
-package eu.rageproject.assets;
+package eu.rageproject.asset.manager;
 
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -1,8 +1,8 @@
 package eu.rageproject.assets.demo;
 
-import eu.rageproject.assets.IAsset;
-import eu.rageproject.assets.AssetManager;
-import eu.rageproject.assets.BaseAsset;
+import eu.rageproject.asset.manager.AssetManager;
+import eu.rageproject.asset.manager.BaseAsset;
+import eu.rageproject.asset.manager.IAsset;
 import eu.rageproject.assets.logger.Logger;
 
 public class DemoAsset extends BaseAsset {

@@ -2,9 +2,9 @@ package eu.rageproject.assets.demo;
 
 import java.io.IOException;
 
-import eu.rageproject.assets.AssetManager;
-import eu.rageproject.assets.PubSubz;
-import eu.rageproject.assets.PubSubz.TopicEvent;
+import eu.rageproject.asset.manager.AssetManager;
+import eu.rageproject.asset.manager.PubSubz;
+import eu.rageproject.asset.manager.PubSubz.TopicEvent;
 import eu.rageproject.assets.logger.Logger;
 import eu.rageproject.assets.logger.Logger.LoggerListener;
 
