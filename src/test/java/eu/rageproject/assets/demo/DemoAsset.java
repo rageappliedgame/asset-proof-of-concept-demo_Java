@@ -27,7 +27,7 @@ public class DemoAsset extends BaseAsset {
 	 */
 	private AssetSettings settings;
 
-	protected DemoAsset() {
+	public DemoAsset() {
 		this.fileStorage = new TreeMap<>();
 		settings = new AssetSettings();
 		settings.setTestProperty(settings.getTestProperty()+"test");

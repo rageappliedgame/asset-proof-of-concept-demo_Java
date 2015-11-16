@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -35,6 +37,7 @@ import javax.xml.bind.annotation.XmlValue;
  * @author Ivan Martinez-Ortiz
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "version")
 public class RageVersionInfo {
 
@@ -165,8 +168,9 @@ public class RageVersionInfo {
 	 * 
 	 * @author Ivan Martinez-Ortiz
 	 */
+	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "depends")
-	public class Dependency {
+	public static class Dependency {
 		
 		@XmlAttribute(name="minVersion", required=true)
 		private String minVersion;

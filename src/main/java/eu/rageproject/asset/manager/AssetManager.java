@@ -21,13 +21,11 @@ public final class AssetManager {
 
 	public static final String LOGGER_KEY = "eu.rageproject.assetManager";
 
-	private static final Pattern CLASS_PATTERN = Pattern.compile("^[^_]+$");
+	private static final Pattern CLASS_PATTERN = Pattern.compile("^([^_]+)_\\d+$");
 
 	private static final Logger log = Logger.getLogger(LOGGER_KEY);
 
 	private static AssetManager INSTANCE;
-
-	private static int idGenerator = 0;
 
 	public static AssetManager getInstance() {
 		if (INSTANCE == null) {
@@ -35,6 +33,12 @@ public final class AssetManager {
 		}
 		return AssetManager.INSTANCE;
 	}
+	
+	static void setInstance(AssetManager instance) {
+		INSTANCE = instance;
+	}
+	
+	private int idGenerator;
 
 	private Map<String, IAsset> assets;
 
@@ -44,6 +48,7 @@ public final class AssetManager {
 	 * Avoid manual instantiation
 	 */
 	private AssetManager() {
+		this.idGenerator = 0;
 		this.assets = new HashMap<>();
 		initEventSystem();
 	}
@@ -56,7 +61,8 @@ public final class AssetManager {
 	@SuppressWarnings("unchecked")
 	public <T> T findAssetByClass(String clazz) {
 		for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
-			if (CLASS_PATTERN.matcher(e.getKey()).matches()) {
+			Matcher m = CLASS_PATTERN.matcher(e.getKey());
+			if (m.matches() && m.group(1).equals(clazz)) {
 				return (T) e.getValue();
 			}
 		}
@@ -86,7 +92,8 @@ public final class AssetManager {
 	public Iterable<IAsset> findAssetsByClass(String clazz) {
 		List<IAsset> results = new LinkedList<>();
 		for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
-			if (CLASS_PATTERN.matcher(e.getKey()).matches()) {
+			Matcher m = CLASS_PATTERN.matcher(e.getKey());
+			if (m.matches() && m.group(1).equals(clazz)) {
 				results.add(e.getValue());
 			}
 		}
@@ -124,7 +131,7 @@ public final class AssetManager {
 	 * 
 	 * @return The version and dependencies report.
 	 */
-    public String VersionAndDependenciesReport() {
+    public String getVersionAndDependenciesReport() {
             int col1w = 40;
             int col2w = 32;
 
@@ -133,14 +140,16 @@ public final class AssetManager {
             // Get system dependant end of line separators
             String eol = System.getProperty("line.separator");
             
-            report.append(padRight("Asset", col1w)).append(eol);
-            report.append(padRight("Depends on", col2w)).append(eol);
-            report.append(padRight("", col1w, '-')).append(eol);
-            report.append(padRight("", col2w, '-')).append(eol);
+            report.append(padRight("Asset", col1w - "Asset".length()));
+            report.append(padRight("| Depends on", col2w)).append(eol);
+            report.append(padRight("", col1w, '-'));
+            report.append("+");
+            report.append(padRight("", col2w-1, '-')).append(eol);
 
             for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
             	IAsset asset = e.getValue();
-                report.append(padRight(String.format("%s v%s", asset.getClassName(), asset.getVersion()), col1w - 1));
+            	String artifact = String.format("%s v%s", asset.getClassName(), asset.getVersion());
+                report.append(padRight(artifact, col1w - artifact.length()));
 
                 int cnt = 0;
                 for (Map.Entry<String, String> dependency : asset.getDependencies().entrySet()) {
@@ -190,7 +199,7 @@ public final class AssetManager {
                             }
                         }
 
-                        report.append(String.format("|%s v%s [%s]", dependency.getKey(), dependency.getValue(), found ? "resolved" : "missing")).append(eol);
+                        report.append(String.format("| %s v%s [%s]", dependency.getKey(), dependency.getValue(), found ? "resolved" : "missing")).append(eol);
                     } else {
                         report.append("error");
                     }
@@ -203,11 +212,13 @@ public final class AssetManager {
                 }
 
                 if (cnt == 0) {
-                    report.append(String.format("|%s", "No dependencies")).append(eol);
+                    report.append(String.format("| %s", "No dependencies")).append(eol);
                 }
             }
 
-            report.append(String.format("%s+%s", padRight("", col1w - 1, '-'), padRight("", col2w, '-'))).append(eol);
+            report.append(padRight("", col1w, '-'));
+            report.append("+");
+            report.append(padRight("", col2w-1, '-')).append(eol);
 
             return report.toString();
     }
@@ -269,7 +280,7 @@ public final class AssetManager {
     		this(doParse(version));
     	}
 
-		private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+\\.\\d+(\\d+\\.(\\d+))");
+		private static final Pattern VERSION_PATTERN = Pattern.compile("^(\\d+)\\.(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?$");
 		
 		private static int[] doParse(String version) {
 			int[] versionArray = new int[] {0, 0, -1, -1};
@@ -278,10 +289,10 @@ public final class AssetManager {
 			if (m.matches()) {
 				versionArray[0] = Integer.parseInt(m.group(1), 10);
 				versionArray[1] = Integer.parseInt(m.group(2), 10);
-				if (m.groupCount() > 3) {
+				if (m.groupCount() > 3 && m.group(3) != null) {
 					versionArray[2] = Integer.parseInt(m.group(3), 10);
 				}
-				if (m.groupCount() > 4) {
+				if (m.groupCount() > 4 && m.group(4) != null) {
 					versionArray[3] = Integer.parseInt(m.group(4), 10);
 				}
 			}

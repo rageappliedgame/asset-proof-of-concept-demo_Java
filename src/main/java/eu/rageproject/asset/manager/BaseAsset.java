@@ -43,7 +43,7 @@ public abstract class BaseAsset implements IAsset {
 	private String getVersionAndDependencies() {
 		// ! <package>.Resources.<AssetType>.VersionAndDependencies.xml
 		String xml = getEmbeddedResource(getClass().getPackage().getName(),
-				String.format("Resources.%s.VersionAndDependencies.xml", getClass().getName()));
+				String.format("%s.VersionAndDependencies.xml", getClass().getSimpleName()));
 		return xml;
 	}
 
@@ -58,7 +58,7 @@ public abstract class BaseAsset implements IAsset {
 	 * @return The embedded resource.
 	 */
 	protected String getEmbeddedResource(String pkg, String res) {
-		String path = String.format("%s.%s", pkg, res);
+		String path = String.format("/%s/%s", pkg.replaceAll("\\.", "/"), res);
 
 		InputStream in = getClass().getResourceAsStream(path);
 		if (in != null) {
@@ -77,7 +77,7 @@ public abstract class BaseAsset implements IAsset {
 
 	@Override
 	public String getClassName() {
-		return getClass().getName();
+		return getClass().getSimpleName();
 	}
 
 	@Override
