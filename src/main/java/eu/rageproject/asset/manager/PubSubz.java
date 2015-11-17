@@ -1,4 +1,4 @@
-package eu.rageproject.assets;
+package eu.rageproject.asset.manager;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +25,9 @@ public class PubSubz {
 		return PubSubz.INSTANCE;
 	}
 	
+	static final void setInstance(PubSubz instance) {
+		INSTANCE = instance;
+	}
 	
 	private int subUid;
 	

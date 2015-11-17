@@ -1,12 +1,17 @@
-package eu.rageproject.assets.demo;
+package eu.rageproject.assets.dialogue;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import eu.rageproject.assets.AssetManager;
-import eu.rageproject.assets.BaseAsset;
+import eu.rageproject.asset.manager.AssetManager;
+import eu.rageproject.asset.manager.BaseAsset;
 import eu.rageproject.assets.logger.Logger;
 
 /**
@@ -14,7 +19,7 @@ import eu.rageproject.assets.logger.Logger;
  * @author Ivan Martinez-Ortiz
  *
  */
-public class DialogAsset extends BaseAsset {
+public class DialogueAsset extends BaseAsset {
 
 	private List<Dialogue> dialogues;
 
@@ -22,12 +27,10 @@ public class DialogAsset extends BaseAsset {
 
 	private List<State> states;
 
-	protected DialogAsset(String id) {
-		super(id);
+	public DialogueAsset() {
 		this.dialogues = new ArrayList<>();
 		this.states = new ArrayList<>();
-		this.logger = AssetManager.getInstance().<Logger> findAssetByClass(
-				"Logger");
+		this.logger = AssetManager.getInstance().<Logger>findAssetByClass("Logger");
 	}
 
 	public Dialogue interact(String actor, String player, int response) {
@@ -98,6 +101,51 @@ public class DialogAsset extends BaseAsset {
 
 	}
 
+	public void loadScript(String actor, String url) throws IOException {
+		loadScript(actor, new FileInputStream(url));
+	}
+
+	public void loadScript(String actor, InputStream input) throws IOException {
+		List<Integer> responses = new LinkedList<>();
+
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+
+				String id = null;
+				String text = null;
+				int next = -1;
+				responses.clear();
+
+				if (!Character.isDigit(line.charAt(0))) {
+					id = line.substring(0, line.indexOf(':'));
+					text = line.substring(line.indexOf(':') + 1).trim();
+				} else {
+					int start = line.indexOf(' ') + 1;
+
+					id = line.substring(0, start - 1);
+
+					if (line.indexOf("->") != -1) {
+						text = line.substring(start, line.indexOf("->") - 1);
+						next = Integer.parseInt(line.substring(line.indexOf("->") + "->".length() + 1));
+					} else if (line.indexOf("[") != -1 && line.indexOf("]") != -1) {
+						text = line.substring(start, line.indexOf("[") - 1);
+
+						start = line.indexOf('[');
+						int end = line.indexOf(']');
+						String textResponses = line.substring(start + 1, end);
+
+						for (String response : textResponses.split(",")) {
+							responses.add(Integer.parseInt(response.trim()));
+						}
+					}
+				}
+
+				this.dialogues.add(new Dialogue(id, actor, next, responses, text));
+			}
+		}
+	}
+
 	private Dialogue findDialogueById(String dialogId) {
 		for (Dialogue d : this.dialogues) {
 			if (d.getId().equals(dialogId)) {
@@ -109,7 +157,7 @@ public class DialogAsset extends BaseAsset {
 
 	private Dialogue firstDialogueByActorAndState(String actor, int state) {
 		for (Dialogue d : this.dialogues) {
-			if (d.getActor().equals(actor) && d.getId().equals(state)) {
+			if (d.getActor().equals(actor) && d.getId().equals(Integer.toString(state))) {
 				return d;
 			}
 		}
@@ -150,7 +198,7 @@ public class DialogAsset extends BaseAsset {
 			index++;
 		}
 
-		if (index == this.states.size()) {
+		if (index == this.dialogues.size()) {
 			index = -1;
 		}
 
@@ -182,6 +230,13 @@ public class DialogAsset extends BaseAsset {
 	}
 }
 
+/**
+ * 
+ * Immutable class.
+ * 
+ * @author Ivan Martinez-Ortiz
+ *
+ */
 final class Dialogue {
 
 	private final String actor;
@@ -196,8 +251,9 @@ final class Dialogue {
 
 	private int cachedHashCode;
 
-	public Dialogue(String actor, String id, int next, List<Integer> responses,
-			String text) {
+	private String cachedToString;
+
+	public Dialogue(String id, String actor, int next, List<Integer> responses, String text) {
 		this.cachedHashCode = 0;
 		this.actor = actor;
 		this.id = id;
@@ -248,8 +304,7 @@ final class Dialogue {
 		result = prime * result + ((actor == null) ? 0 : actor.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + next;
-		result = prime * result
-				+ ((responses == null) ? 0 : responses.hashCode());
+		result = prime * result + ((responses == null) ? 0 : responses.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 
 		this.cachedHashCode = result;
@@ -290,8 +345,24 @@ final class Dialogue {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		if (this.cachedToString == null) {
+			this.cachedToString = "Dialogue [id=" + id + ", actor=" + actor + ", next=" + next + ", responses="
+					+ responses + ", text=" + text + "]";
+		}
+		return this.cachedToString;
+	}
 }
 
+/**
+ * 
+ * Immutable class.
+ * 
+ * @author Ivan Martinez-Ortiz
+ *
+ */
 final class State {
 	private final String actor;
 
@@ -300,6 +371,8 @@ final class State {
 	private final int state;
 
 	private int cachedHashCode;
+
+	private String cachedToString;
 
 	public State(String actor, String player, int state) {
 		this.actor = actor;
@@ -358,4 +431,11 @@ final class State {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		if (this.cachedToString == null) {
+			this.cachedToString = "State [actor=" + actor + ", player=" + player + ", state=" + state + "]";
+		}
+		return this.cachedToString;
+	}
 }
