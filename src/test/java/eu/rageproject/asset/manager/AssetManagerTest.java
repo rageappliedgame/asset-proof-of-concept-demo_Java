@@ -1,6 +1,5 @@
 package eu.rageproject.asset.manager;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Matchers.anyString;
@@ -20,7 +19,6 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import eu.rageproject.assets.demo.App;
 import eu.rageproject.assets.demo.DemoAsset;
 import eu.rageproject.assets.demo.IDataArchive;
 import eu.rageproject.assets.dialogue.DialogueAsset;
@@ -140,21 +138,21 @@ public class AssetManagerTest {
 	public void testTryToRegisterAgainAnAsset() {
 		// Given
 		DemoAsset asset = new DemoAsset();
-		
+
 		// When
 		String id = AssetManager.getInstance().registerAssetInstance(asset, "DemoAsset");
-		
+
 		// Then
 		// the id of the already registered asset is returned
 		assertThat(id, equalTo("DemoAsset_1"));
 	}
-	
+
 	@Test
 	public void tetDialogueAsset() throws Exception {
 
 		// Given
 		DialogueAsset asset = new DialogueAsset();
-		asset.loadScript("me", App.class.getResourceAsStream("/script.txt"));
+		asset.loadScript("me", AssetManagerTest.class.getResourceAsStream("/script.txt"));
 
 		// Interacting using ask/tell
 
@@ -170,7 +168,7 @@ public class AssetManagerTest {
 
 		asset.interact("me", "player");
 	}
-	
+
 	/**
 	 * Sample {@link eu.rageproject.asset.manager.IBridge} implementation
 	 */
