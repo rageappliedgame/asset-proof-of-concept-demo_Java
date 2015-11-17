@@ -20,6 +20,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import eu.rageproject.assets.demo.App;
 import eu.rageproject.assets.demo.DemoAsset;
 import eu.rageproject.assets.demo.IDataArchive;
 import eu.rageproject.assets.dialogue.DialogueAsset;
@@ -135,6 +136,41 @@ public class AssetManagerTest {
 		verify((ILogger) loggerAsset2Bridge, times(1)).doLog(anyString());
 	}
 
+	@Test
+	public void testTryToRegisterAgainAnAsset() {
+		// Given
+		DemoAsset asset = new DemoAsset();
+		
+		// When
+		String id = AssetManager.getInstance().registerAssetInstance(asset, "DemoAsset");
+		
+		// Then
+		// the id of the already registered asset is returned
+		assertThat(id, equalTo("DemoAsset_1"));
+	}
+	
+	@Test
+	public void tetDialogueAsset() throws Exception {
+
+		// Given
+		DialogueAsset asset = new DialogueAsset();
+		asset.loadScript("me", App.class.getResourceAsStream("/script.txt"));
+
+		// Interacting using ask/tell
+
+		asset.interact("me", "player", "banana");
+
+		// Interacting using branches
+		//
+		asset.interact("me", "player");
+		asset.interact("me", "player", 2); // Answer id 2
+
+		asset.interact("me", "player");
+		asset.interact("me", "player", 6); // Answer id 6
+
+		asset.interact("me", "player");
+	}
+	
 	/**
 	 * Sample {@link eu.rageproject.asset.manager.IBridge} implementation
 	 */
