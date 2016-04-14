@@ -10,21 +10,21 @@ import java.util.Map;
  */
 public interface IAsset {
 
-	public String getClassName();
+	String getClassName();
 	
-	public String getId();
+	String getId();
 	
-	public Map<String, String> getDependencies();
+	Map<String, String> getDependencies();
 	
-	public String getMaturity();
+	String getMaturity();
 	
-	public ISettings getSettings();
+	ISettings getSettings();
 	
-	public void setSettings(ISettings settings);
+	void setSettings(ISettings settings);
 	
-	public String getVersion();
+	String getVersion();
 	
-	public IBridge getBridge();
+	IBridge getBridge();
 	
-	public void setBridge(IBridge bridge);
+	void setBridge(IBridge bridge);
 }

@@ -14,8 +14,8 @@ package eu.rageproject.asset.manager;
  * </ul>
  * 
  * Default settings and application default settings are read-only at run-time.
- * If modification and storage is needed at run-time, the {@link #IDataStorage}
- * interface could be used i.c.m. {@link #ISettings} methods.
+ * If modification and storage is needed at run-time, the {@link IDataStorage}
+ * interface could be used i.c.m. {@link ISettings} methods.
  */
 public interface IDefaultSettings {
 
@@ -54,5 +54,5 @@ public interface IDefaultSettings {
 	 * @param fileData
 	 *            Data to save.
 	 */
-	void saveDefaultSettings(String Class, String Id, String fileData);
+	void saveDefaultSettings(String clazz, String id, String fileData);
 }

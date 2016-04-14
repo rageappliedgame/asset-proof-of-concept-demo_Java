@@ -12,9 +12,8 @@ import javax.xml.bind.JAXB;
 import eu.rageproject.asset.manager.RageVersionInfo.Dependency;
 
 /**
- * 
+ * Base for assets. Implements minimal boilerplate behavior.
  * @author Ivan Martinez-Ortiz
- *
  */
 public abstract class BaseAsset implements IAsset {
 
@@ -48,7 +47,7 @@ public abstract class BaseAsset implements IAsset {
 	}
 
 	/**
-	 * Gets embedded resource.
+	 * Retrieves an embedded resource.
 	 * 
 	 * @param pkg
 	 *            The package.
@@ -111,8 +110,8 @@ public abstract class BaseAsset implements IAsset {
 	/**
 	 * Checks if the asset has settings
 	 * 
-	 * @return {@code true} if this {@link Asset} has settings, {@code false}
-	 *         otherwhise.
+	 * @return {@code true} if this {@link IAsset} has settings, {@code false}
+	 *         otherwise.
 	 */
 	public boolean hasSettings() {
 		return this.settings != null;
@@ -135,18 +134,18 @@ public abstract class BaseAsset implements IAsset {
 		Map<String, String> result = new TreeMap<>();
 
 		for (Dependency dep : this.versionInfo.getDependencies()) {
-			String minv = "0.0";
-			String depMinv = dep.getMinVersion();
-			if (depMinv != null) {
-				minv = depMinv;
+			String minVersion = "0.0";
+			String depMinVersion = dep.getMinVersion();
+			if (depMinVersion != null) {
+				minVersion = depMinVersion;
 			}
-			String maxv = "*";
-			String depMaxv = dep.getMaxVersion();
-			if (depMaxv != null) {
-				maxv = depMaxv;
+			String maxVersion = "*";
+			String depMaxVersion = dep.getMaxVersion();
+			if (depMaxVersion != null) {
+				maxVersion = depMaxVersion;
 			}
 
-			result.put(dep.getName(), String.format("%s-%s", minv, maxv));
+			result.put(dep.getName(), String.format("%s-%s", minVersion, maxVersion));
 		}
 
 		return result;

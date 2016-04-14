@@ -45,7 +45,8 @@ public final class AssetManager {
 	private IBridge bridge;
 
 	/**
-	 * Avoid manual instantiation
+	 * Private constructor. Avoids manual instantiation, since this class
+	 * is intended as a singleton.
 	 */
 	private AssetManager() {
 		this.idGenerator = 0;
@@ -241,7 +242,6 @@ public final class AssetManager {
 	 * Mimics required C#'s System.Version class functionality
 	 * 
 	 * @author Ivan Martinez-Ortiz
-	 *
 	 */
 	private static class Version implements Comparable<Version> {
 

@@ -5,15 +5,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * 
- * @author Ivan Martinez-Ortiz
+ * Simple publish-subscribe mechanism for assets.
  *
+ * @author Ivan Martinez-Ortiz
  */
 public class PubSubz {
 
 	
-	public static interface TopicEvent {
-		public void topicUpdated(String topic, Object... params);
+	public interface TopicListener {
+		void topicUpdated(String topic, Object... params);
 	}
 	
 	private static PubSubz INSTANCE;
@@ -31,8 +31,7 @@ public class PubSubz {
 	
 	private int subUid;
 	
-	private Map<String, Map<String, TopicEvent>> topics;
-	
+	private Map<String, Map<String, TopicListener>> topics;
 	
 	private PubSubz() {
 		this.subUid = 0;
@@ -41,7 +40,7 @@ public class PubSubz {
 	
 	public boolean define(String topic) {
 		if (! topics.containsKey(topic)) {
-			topics.put(topic,  new HashMap<String, TopicEvent>());
+			topics.put(topic,  new HashMap<String, TopicListener>());
 			return true;
 		}
 		return false;
@@ -52,14 +51,14 @@ public class PubSubz {
 			return false;
 		}
 		
-		for(Map.Entry<String, TopicEvent> entry : topics.get(topic).entrySet()) {
+		for(Map.Entry<String, TopicListener> entry : topics.get(topic).entrySet()) {
 			entry.getValue().topicUpdated(topic, params);
 		}
 		
 		return true;
 	}
 	
-	public String subscribe(String topic, TopicEvent listener) {
+	public String subscribe(String topic, TopicListener listener) {
 		define(topic);
 		
 		String token = Integer.toString(++this.subUid);
@@ -69,11 +68,11 @@ public class PubSubz {
 	}
 	
 	public boolean unsubscribe(String token) {
-		for (Map.Entry<String, Map<String, TopicEvent>> topic: topics.entrySet() ) {
-			Iterator<Map.Entry<String, TopicEvent>> subscribers = topic.getValue().entrySet().iterator();
+		for (Map.Entry<String, Map<String, TopicListener>> topic: topics.entrySet() ) {
+			Iterator<Map.Entry<String, TopicListener>> subscribers = topic.getValue().entrySet().iterator();
 			
 			while (subscribers.hasNext()) {
-				Map.Entry<String, TopicEvent> subscriber = subscribers.next();
+				Map.Entry<String, TopicListener> subscriber = subscribers.next();
 				if (subscriber.getKey().equals(token)) {
 					subscribers.remove();
 					return true;

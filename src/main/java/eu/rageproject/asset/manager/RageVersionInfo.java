@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
 /**
- * Information about the rage version.
+ * Information about the RAGE version.
  * 
  * <p>
  * <strong>VERSION INFO EXAMPLE</strong>
@@ -64,8 +64,7 @@ public class RageVersionInfo {
 	private List<Dependency> dependencies;
 
 	/**
-	 * Initializes a new instance of the {@link #AssetManagerPackage
-	 * .RageVersionInfo} class.
+	 * Constructor.
 	 */
 	public RageVersionInfo() {
 		this.id = null;
@@ -163,8 +162,8 @@ public class RageVersionInfo {
 	 * <strong>DEPENDENCY EXAMPLE</strong>
 	 * </p>
 	 * {@code
-	   <depends minVersion = "1.2.3" > Logger </ depends >
-	    }
+	 *   <depends minVersion = "1.2.3" > Logger </ depends >
+	 * }
 	 * 
 	 * @author Ivan Martinez-Ortiz
 	 */
