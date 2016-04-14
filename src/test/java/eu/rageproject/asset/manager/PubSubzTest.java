@@ -10,15 +10,15 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
-import eu.rageproject.asset.manager.PubSubz.TopicEvent;
+import eu.rageproject.asset.manager.PubSubz.TopicListener;
 
 public class PubSubzTest {
 
 	@Test
 	public void testPubSubOnlyRegisteredToTopic() {
 		// Given
-		TopicEvent listener1 = mock(TopicEvent.class);
-		TopicEvent listener2 = mock(TopicEvent.class);
+		TopicListener listener1 = mock(TopicListener.class);
+		TopicListener listener2 = mock(TopicListener.class);
 
 		PubSubz cut = PubSubz.getInstance();
 
@@ -36,8 +36,8 @@ public class PubSubzTest {
 	@Test
 	public void testPubSubSeveralRegisteredListeners() {
 		// Given
-		TopicEvent listener1 = mock(TopicEvent.class);
-		TopicEvent listener2 = mock(TopicEvent.class);
+		TopicListener listener1 = mock(TopicListener.class);
+		TopicListener listener2 = mock(TopicListener.class);
 
 		PubSubz cut = PubSubz.getInstance();
 

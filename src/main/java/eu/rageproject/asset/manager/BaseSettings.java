@@ -3,7 +3,7 @@ package eu.rageproject.asset.manager;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * A base settings.
+ * A base settings object.
  * 
  * @author Ivan Martinez-Ortiz
  *
