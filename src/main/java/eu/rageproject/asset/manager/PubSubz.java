@@ -13,7 +13,7 @@ public class PubSubz {
 
 	
 	public static interface TopicEvent {
-		public void topicUpdated(String topic, Object... params);
+		public void topicUpdated(final String topic, final Object... params);
 	}
 	
 	private static PubSubz INSTANCE;
@@ -25,7 +25,7 @@ public class PubSubz {
 		return PubSubz.INSTANCE;
 	}
 	
-	static final void setInstance(PubSubz instance) {
+	static final void setInstance(final PubSubz instance) {
 		INSTANCE = instance;
 	}
 	
@@ -47,7 +47,7 @@ public class PubSubz {
 		return false;
 	}
 	
-	public boolean publish(String topic, Object... params) {
+	public boolean publish(final String topic, final Object... params) {
 		if ( ! topics.containsKey(topic)) {
 			return false;
 		}
@@ -59,7 +59,7 @@ public class PubSubz {
 		return true;
 	}
 	
-	public String subscribe(String topic, TopicEvent listener) {
+	public String subscribe(final String topic, final TopicEvent listener) {
 		define(topic);
 		
 		String token = Integer.toString(++this.subUid);
@@ -68,7 +68,7 @@ public class PubSubz {
 		return token;
 	}
 	
-	public boolean unsubscribe(String token) {
+	public boolean unsubscribe(final String token) {
 		for (Map.Entry<String, Map<String, TopicEvent>> topic: topics.entrySet() ) {
 			Iterator<Map.Entry<String, TopicEvent>> subscribers = topic.getValue().entrySet().iterator();
 			

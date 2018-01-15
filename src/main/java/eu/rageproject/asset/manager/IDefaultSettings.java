@@ -30,7 +30,7 @@ public interface IDefaultSettings {
 	 * @return {@code true} if default settings, {@code false}
 	 *         otherwise.
 	 */
-	boolean hasDefaultSettings(String clazz, String id);
+	boolean hasDefaultSettings(final String clazz, final String id);
 
 	/**
 	 * Loads default settings for a {@code clazz} with {@code id}.
@@ -42,7 +42,7 @@ public interface IDefaultSettings {
 	 * 
 	 * @return The default settings.
 	 */
-	String loadDefaultSettings(String clazz, String id);
+	String loadDefaultSettings(final String clazz, final String id);
 
 	/**
 	 * Saves a default settings for a {@code clazz} with {@code id}.
@@ -54,5 +54,5 @@ public interface IDefaultSettings {
 	 * @param fileData
 	 *            Data to save.
 	 */
-	void saveDefaultSettings(String Class, String Id, String fileData);
+	void saveDefaultSettings(final String Class, final String Id, final String fileData);
 }

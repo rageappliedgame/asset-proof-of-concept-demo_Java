@@ -20,11 +20,11 @@ public interface IAsset {
 	
 	public ISettings getSettings();
 	
-	public void setSettings(ISettings settings);
+	public void setSettings(final ISettings settings);
 	
 	public String getVersion();
 	
 	public IBridge getBridge();
 	
-	public void setBridge(IBridge bridge);
+	public void setBridge(final IBridge bridge);
 }

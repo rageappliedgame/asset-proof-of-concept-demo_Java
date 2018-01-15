@@ -79,7 +79,6 @@ public class AssetManagerTest {
 
 		assertThat(asset2.getDependencies().size(), equalTo(1));
 		assertThat(asset2.getDependencies().get("Logger"), equalTo("1.2.3-*"));
-
 	}
 
 	@Test
@@ -101,6 +100,7 @@ public class AssetManagerTest {
 	public void testAssetToAssetManagerBridgeDelegation() {
 		// Given
 		DemoAsset asset = new DemoAsset();
+		@SuppressWarnings("unused")
 		Logger loggerAsset = new Logger();
 
 		IBridge assetManagerBridge = mock(IBridge.class, withSettings().extraInterfaces(ILogger.class));
@@ -117,6 +117,7 @@ public class AssetManagerTest {
 	public void testAssetToAssetBridgeDelegation() {
 		// Given
 		DemoAsset asset = new DemoAsset();
+		@SuppressWarnings("unused")
 		Logger loggerAsset = new Logger();
 		Logger loggerAsset2 = new Logger();
 
@@ -144,7 +145,7 @@ public class AssetManagerTest {
 
 		// Then
 		// the id of the already registered asset is returned
-		assertThat(id, equalTo("DemoAsset_1"));
+		assertThat(id, equalTo("DemoAsset_0"));
 	}
 
 	@Test

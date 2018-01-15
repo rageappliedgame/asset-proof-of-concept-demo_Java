@@ -80,7 +80,7 @@ public class RageVersionInfo {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
@@ -88,7 +88,7 @@ public class RageVersionInfo {
 		return major;
 	}
 
-	public void setMajor(int major) {
+	public void setMajor(final int major) {
 		this.major = major;
 	}
 
@@ -96,7 +96,7 @@ public class RageVersionInfo {
 		return minor;
 	}
 
-	public void setMinor(int minor) {
+	public void setMinor(final int minor) {
 		this.minor = minor;
 	}
 
@@ -104,7 +104,7 @@ public class RageVersionInfo {
 		return build;
 	}
 
-	public void setBuild(int build) {
+	public void setBuild(final int build) {
 		this.build = build;
 	}
 
@@ -112,7 +112,7 @@ public class RageVersionInfo {
 		return revision;
 	}
 
-	public void setRevision(int revision) {
+	public void setRevision(final int revision) {
 		this.revision = revision;
 	}
 
@@ -120,7 +120,7 @@ public class RageVersionInfo {
 		return maturity;
 	}
 
-	public void setMaturity(String maturity) {
+	public void setMaturity(final String maturity) {
 		this.maturity = maturity;
 	}
 
@@ -128,7 +128,7 @@ public class RageVersionInfo {
 		return dependencies;
 	}
 
-	public void setDependencies(List<Dependency> dependencies) {
+	public void setDependencies(final List<Dependency> dependencies) {
 		this.dependencies = dependencies;
 	}
 
@@ -140,7 +140,7 @@ public class RageVersionInfo {
 	 * 
 	 * @return the loaded version info
 	 */
-	public static RageVersionInfo loadVersionInfo(String xml) {
+	public static RageVersionInfo loadVersionInfo(final String xml) {
 		RageVersionInfo info = JAXB.unmarshal(new StringReader(xml), RageVersionInfo.class);
 		return info;
 	}
@@ -191,7 +191,7 @@ public class RageVersionInfo {
 			return minVersion;
 		}
 
-		public void setMinVersion(String minVersion) {
+		public void setMinVersion(final String minVersion) {
 			this.minVersion = minVersion;
 		}
 
@@ -199,7 +199,7 @@ public class RageVersionInfo {
 			return maxVersion;
 		}
 
-		public void setMaxVersion(String maxVersion) {
+		public void setMaxVersion(final String maxVersion) {
 			this.maxVersion = maxVersion;
 		}
 
@@ -207,7 +207,7 @@ public class RageVersionInfo {
 			return name;
 		}
 
-		public void setName(String name) {
+		public void setName(final String name) {
 			this.name = name;
 		}
 	}

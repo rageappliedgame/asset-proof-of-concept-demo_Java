@@ -34,7 +34,7 @@ public final class AssetManager {
 		return AssetManager.INSTANCE;
 	}
 	
-	static void setInstance(AssetManager instance) {
+	static void setInstance(final AssetManager instance) {
 		INSTANCE = instance;
 	}
 	
@@ -59,7 +59,7 @@ public final class AssetManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T findAssetByClass(String clazz) {
+	public <T> T findAssetByClass(final String clazz) {
 		for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
 			Matcher m = CLASS_PATTERN.matcher(e.getKey());
 			if (m.matches() && m.group(1).equals(clazz)) {
@@ -78,7 +78,7 @@ public final class AssetManager {
 	 * @return return the <code>Asset</code> or <code>null</code> if the
 	 *         <code>id</code> is not found.
 	 */
-	public IAsset findAssetById(String id) {
+	public IAsset findAssetById(final String id) {
 		return this.assets.get(id);
 	}
 
@@ -89,7 +89,7 @@ public final class AssetManager {
 	 *            The
 	 * @return
 	 */
-	public Iterable<IAsset> findAssetsByClass(String clazz) {
+	public Iterable<IAsset> findAssetsByClass(final String clazz) {
 		List<IAsset> results = new LinkedList<>();
 		for (Map.Entry<String, IAsset> e : this.assets.entrySet()) {
 			Matcher m = CLASS_PATTERN.matcher(e.getKey());
@@ -100,7 +100,7 @@ public final class AssetManager {
 		return results;
 	}
 
-	public String registerAssetInstance(IAsset asset, String clazz) {
+	public String registerAssetInstance(final IAsset asset, final String clazz) {
 		for (Map.Entry<String, IAsset> e : assets.entrySet()) {
 			if (e.getValue() == asset) {
 				return e.getKey();
@@ -122,7 +122,7 @@ public final class AssetManager {
 		return bridge;
 	}
 
-	public void setBridge(IBridge bridge) {
+	public void setBridge(final IBridge bridge) {
 		this.bridge = bridge;
 	}
 
@@ -223,11 +223,11 @@ public final class AssetManager {
             return report.toString();
     }
 
-	private String padRight(String base, int quantity) {
+	private String padRight(final String base, final int quantity) {
 		return padRight(base, quantity, ' ');
 	}
 
-	private String padRight(String base, int quantity, char paddingChar) {
+	private String padRight(final String base, final int quantity, final char paddingChar) {
 		StringBuilder buffer = new StringBuilder(base.length() + quantity);
 		buffer.append(base);
 		for (int i = 0; i < quantity; i++) {
@@ -253,36 +253,38 @@ public final class AssetManager {
 
 		private final int revision;
 
+		@SuppressWarnings("unused")
 		public Version() {
 			this(0, 0, -1, -1);
 		}
 
-		public Version(int major, int minor) {
+		public Version(final int major, final int minor) {
 			this(major, minor, -1, -1);
 		}
 
-		public Version(int major, int minor, int build) {
+		@SuppressWarnings("unused")
+		public Version(final int major, final int minor, final int build) {
 			this(major, minor, build, -1);
 		}
 
-		public Version(int major, int minor, int build, int revision) {
+		public Version(final int major, final int minor, final int build, final int revision) {
 			this.major = major;
 			this.minor = minor;
 			this.build = build;
 			this.revision = revision;
 		}
 		
-		protected Version(int[] version) {
+		protected Version(final int[] version) {
 			this(version[0], version[1], version[2], version[3]);
 		}
 
-		public Version(String version) {
+		public Version(final String version) {
     		this(doParse(version));
     	}
 
 		private static final Pattern VERSION_PATTERN = Pattern.compile("^(\\d+)\\.(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?$");
 		
-		private static int[] doParse(String version) {
+		private static int[] doParse(final String version) {
 			int[] versionArray = new int[] {0, 0, -1, -1};
 			
 			Matcher m = VERSION_PATTERN.matcher(version);
@@ -299,7 +301,8 @@ public final class AssetManager {
 			return versionArray;
 		}
 
-		public static Version parse(String version) {
+		@SuppressWarnings("unused")
+		public static Version parse(final String version) {
 			return new Version(version);
 		}
 
@@ -325,7 +328,7 @@ public final class AssetManager {
 		 * @throws ClassCastException
 		 */
 		@Override
-		public int compareTo(Version v) throws ClassCastException {
+		public int compareTo(final Version v) throws ClassCastException {
 			return -1;
 		}
 
@@ -341,7 +344,7 @@ public final class AssetManager {
 		}
 
 		@Override
-		public boolean equals(Object obj) {
+		public boolean equals(final Object obj) {
 			if (this == obj)
 				return true;
 			if (obj == null)

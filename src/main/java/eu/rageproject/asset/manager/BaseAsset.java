@@ -57,7 +57,7 @@ public abstract class BaseAsset implements IAsset {
 	 *
 	 * @return The embedded resource.
 	 */
-	protected String getEmbeddedResource(String pkg, String res) {
+	protected String getEmbeddedResource(final String pkg, final String res) {
 		String path = String.format("/%s/%s", pkg.replaceAll("\\.", "/"), res);
 
 		InputStream in = getClass().getResourceAsStream(path);
@@ -70,7 +70,7 @@ public abstract class BaseAsset implements IAsset {
 		return "";
 	}
 
-	public BaseAsset(IBridge bridge) {
+	public BaseAsset(final IBridge bridge) {
 		this();
 		this.bridge = bridge;
 	}
@@ -91,7 +91,7 @@ public abstract class BaseAsset implements IAsset {
 	}
 
 	@Override
-	public void setBridge(IBridge bridge) {
+	public void setBridge(final IBridge bridge) {
 		this.bridge = bridge;
 	}
 
@@ -104,7 +104,7 @@ public abstract class BaseAsset implements IAsset {
 		return settings;
 	}
 
-	public void setSettings(ISettings settings) {
+	public void setSettings(final ISettings settings) {
 		this.settings = settings;
 	}
 
@@ -127,7 +127,8 @@ public abstract class BaseAsset implements IAsset {
 		return this.versionInfo;
 	}
 
-	private void setVersionInfo(RageVersionInfo versionInfo) {
+	@SuppressWarnings("unused")
+	private void setVersionInfo(final RageVersionInfo versionInfo) {
 		this.versionInfo = versionInfo;
 	}
 
@@ -163,7 +164,7 @@ public abstract class BaseAsset implements IAsset {
 	 *         not have an adapter for the given class
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T> T getInterface(Class<T> adapter) {
+	protected <T> T getInterface(final Class<T> adapter) {
 		if (this.bridge != null && adapter.isAssignableFrom(this.bridge.getClass())) {
 			return (T) this.bridge;
 		}
@@ -201,7 +202,7 @@ public abstract class BaseAsset implements IAsset {
 	 * 
 	 * @return {@code true} if it succeeds, {@code false} otherwise.
 	 */
-	public Boolean loadSettings(String filename) {
+	public Boolean loadSettings(final String filename) {
 		IDataStorage ds = getInterface(IDataStorage.class);
 
 		if (ds != null && hasSettings() && ds.exists(filename)) {
@@ -221,7 +222,7 @@ public abstract class BaseAsset implements IAsset {
 	 * 
 	 * @return {@code true} if it succeeds, {@code false} otherwise.
 	 */
-	public Boolean saveDefaultSettings(boolean force) {
+	public Boolean saveDefaultSettings(final boolean force) {
 		IDefaultSettings ds = getInterface(IDefaultSettings.class);
 
 		if (ds != null && hasSettings() && (force || !ds.hasDefaultSettings(getClassName(), getId()))) {
@@ -241,7 +242,7 @@ public abstract class BaseAsset implements IAsset {
 	 * 
 	 * @return {@code true} if it succeeds, {@code false} otherwise.
 	 */
-	public Boolean SaveSettings(String filename) {
+	public Boolean SaveSettings(final String filename) {
 		IDataStorage ds = getInterface(IDataStorage.class);
 
 		if (ds != null && hasSettings()) {
@@ -265,7 +266,7 @@ public abstract class BaseAsset implements IAsset {
 	 * 
 	 * @return a {@link ISettings} object implementation. 
 	 */
-	protected ISettings settingsFromXml(String xml) {
+	protected ISettings settingsFromXml(final String xml) {
 		return JAXB.unmarshal(new StringReader(xml), this.settings.getClass());
 	}
 

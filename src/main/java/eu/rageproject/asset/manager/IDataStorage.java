@@ -15,7 +15,7 @@ public interface IDataStorage {
      * 
      * @return {@code true} if it succeeds, {@code false} otherwise.
      */
-    public boolean delete(String fileId);
+    public boolean delete(final String fileId);
 
 	/**
      * Checks if exits a file with <code>fileId</code> identifier.
@@ -24,7 +24,7 @@ public interface IDataStorage {
      * 
      * @returns {@code true} if exits, {@code false} otherwise.
      */
-    public boolean exists(String fileId);
+    public boolean exists(final String fileId);
     
     /**
      * 
@@ -41,7 +41,7 @@ public interface IDataStorage {
      * 
      * @return file contents or {@code null} if not exits.
      */
-    public String load(String fileId);
+    public String load(final String fileId);
 
     /**
      * Saves the given file.
@@ -50,5 +50,5 @@ public interface IDataStorage {
      * 
      * @param fileData file content to save.
      */
-    public void save(String fileId, String fileData);
+    public void save(final String fileId, final String fileData);
 }
